@@ -1,34 +1,8 @@
-import { useEffect, useState } from "react";
-import fetchFromIGDB from "../services/api-client";
 import { Text, Spinner, Box, Image } from "@chakra-ui/react";
-interface Screenshot {
-  id: number;
-  url: string;
-}
-interface Game {
-  id: number;
-  name: string;
-  screenshots: Screenshot[];
-}
+import useGames from "../hooks/useGames";
 
 const GameGrid = () => {
-  const [games, setGames] = useState<Game[]>([]);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
-  console.log(games);
-  useEffect(() => {
-    setLoading(true);
-    fetchFromIGDB("fields name, screenshots.*; limit 1;")
-      .then((data) => {
-        setGames(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
-
+  const { games, error, loading } = useGames();
   return (
     <Box>
       {loading && <Spinner />}
