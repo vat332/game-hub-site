@@ -1,5 +1,6 @@
-import { Text, Spinner, Box, Image } from "@chakra-ui/react";
+import { Text, Spinner, Box, Image, SimpleGrid } from "@chakra-ui/react";
 import useGames from "../hooks/useGames";
+import GameCard from "./GameCard";
 
 const GameGrid = () => {
   const { games, error, loading } = useGames();
@@ -7,26 +8,17 @@ const GameGrid = () => {
     <Box>
       {loading && <Spinner />}
       {error && <Text color="red.500">{error}</Text>}
-      <ul>
+      <SimpleGrid
+        columns={{ sm: 1, md: 2, lg: 3, xl: 5 }}
+        padding={10}
+        spacing={10}
+      >
         {games.map((game) => (
-          <li key={game.id}>
-            {game.name}
-            {game.screenshots &&
-              game.screenshots.map((screenshot) => (
-                <Box key={screenshot.id}>
-                  <Image
-                    src={`https:${screenshot.url.replace(
-                      "t_thumb",
-                      "t_screenshot_med_2x"
-                    )}`} // Wysoka jakość obrazu
-                    alt={`Screenshot of ${game.name}`}
-                    width="40%"
-                  />
-                </Box>
-              ))}
-          </li>
+          <Box key={game.id}>
+            <GameCard game={game} />
+          </Box>
         ))}
-      </ul>
+      </SimpleGrid>
     </Box>
   );
 };
