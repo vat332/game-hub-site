@@ -1,42 +1,37 @@
 import { useEffect, useState } from "react";
-import fetchFromIGDB from "../services/api-client";
+import apiClient from "../services/api-client";
 import { CanceledError } from "axios";
-
-export interface Screenshot {
-  id: number;
-  url: string;
-}
 
 export interface Game {
   id: number;
   name: string;
-  screenshots: Screenshot[];
+  background_image: string;
+}
+
+interface FetchGamesResponse {
+  count: number;
+  results: Game[];
 }
 
 const useGames = () => {
   const [games, setGames] = useState<Game[]>([]);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const controller = new AbortController(); // ✅ Tworzymy AbortController
+    const controller = new AbortController();
 
-    setLoading(true);
-    fetchFromIGDB("fields name, screenshots.*; limit 10;", controller.signal)
-      .then((data) => {
-        setGames(data);
-        setLoading(false);
-      })
+    apiClient
+      .get<FetchGamesResponse>("/games", { signal: controller.signal })
+      .then((res) => setGames(res.data.results))
       .catch((err) => {
-        if (err instanceof CanceledError) return; // ✅ Obsługa anulowania zapytania
+        if (err instanceof CanceledError) return;
         setError(err.message);
-        setLoading(false);
       });
 
-    return () => controller.abort(); // ✅ Anulujemy zapytanie przy odmontowaniu komponentu
+    return () => controller.abort();
   }, []);
 
-  return { games, error, loading };
+  return { games, error };
 };
 
 export default useGames;
