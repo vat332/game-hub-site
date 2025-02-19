@@ -9,7 +9,7 @@ const Emoji = ({ rating }: Props) => {
   const emojiMap: { [key: number]: string } = {
     3: "😕",
     4: "👍🏿",
-    5: "😵‍💫",
+    5: "🔥",
   };
   return <Text marginTop={1}>{emojiMap[rating]}</Text>;
 };
