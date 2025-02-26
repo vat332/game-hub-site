@@ -53,3 +53,4 @@ dist-ssr
 Thumbs.db
 
 .vercel
+.vscode
