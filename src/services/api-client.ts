@@ -29,6 +29,8 @@ class APIclient<T> {
       .get<T>(this.endpoint + "/" + id)
       .then((res) => res.data);
   };
+
+  
 }
 
 export default APIclient;
