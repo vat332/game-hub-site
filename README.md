@@ -24,7 +24,7 @@ Game Hub to aplikacja internetowa, która pozwala użytkownikom przeglądać inf
 1. Sklonuj repozytorium:
 
    ```sh
-   git clone https://github.com/vat332/game-hub.git
+   git clone https://github.com/vat332/game-hub-site.git
    cd game-hub
    ```
 
