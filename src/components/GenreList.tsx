@@ -6,6 +6,7 @@ import {
   List,
   ListItem,
   Spinner,
+  Text,
 } from "@chakra-ui/react";
 import useGenres from "../hooks/useGernes";
 import getCroppedImageUrl from "../services/image-url";
@@ -41,7 +42,7 @@ const GenreList = () => {
                 whiteSpace="normal"
                 textAlign="left"
               >
-                {genre.name}
+                <Text _hover={{ color: "gray.500" }}>{genre.name}</Text>
               </Button>
             </HStack>
           </ListItem>
